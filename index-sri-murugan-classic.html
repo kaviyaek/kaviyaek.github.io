@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sri Murugan Stores – Sample Website Design</title>
+<meta name="description" content="Sri Murugan Stores, Thiruvottiyur High Road, Chennai – groceries and household items. Sample website design.">
+<meta name="theme-color" content="#6b1d2a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500;600&family=Noto+Serif+Tamil:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --maroon:#6b1d2a;
+  --maroon-dark:#4a1220;
+  --gold:#b08d3e;
+  --gold-soft:#d9c28a;
+  --cream:#faf5ea;
+  --paper:#fffdf8;
+  --ink:#2a1f1c;
+  --muted:#6f625b;
+  --line:#e6dcc6;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Jost",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --tamil:"Noto Serif Tamil","Cormorant Garamond",serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:78px}
+body{font-family:var(--sans);color:var(--ink);background:var(--cream);line-height:1.75;-webkit-font-smoothing:antialiased;opacity:0;transition:opacity 1s var(--ease)}
+body.ready{opacity:1}
+a{color:inherit;text-decoration:none}
+.container{width:min(1100px,90%);margin-inline:auto}
+section{padding:100px 0;position:relative}
+
+/* Typography */
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15;color:var(--maroon)}
+h2{font-size:clamp(2.1rem,5vw,3.1rem);margin-bottom:14px}
+.eyebrow{display:block;font-size:.74rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:14px}
+.lead{color:var(--muted);max-width:600px}
+.head{text-align:center;margin-bottom:56px}
+.head .lead{margin-inline:auto}
+
+/* Ornament divider */
+.orn{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--gold);margin:18px auto 22px;max-width:260px}
+.orn::before,.orn::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--gold))}
+.orn::after{background:linear-gradient(270deg,transparent,var(--gold))}
+.orn span{font-size:1rem;letter-spacing:.3em}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 34px;font:500 .82rem var(--sans);letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--maroon);cursor:pointer;transition:all .5s var(--ease);background:transparent;color:var(--maroon)}
+.btn:hover{background:var(--maroon);color:var(--cream);letter-spacing:.24em}
+.btn-solid{background:var(--maroon);color:var(--cream)}
+.btn-solid:hover{background:var(--maroon-dark)}
+.btn-gold{border-color:var(--gold);color:var(--gold)}
+.btn-gold:hover{background:var(--gold);color:#fff}
+.btn-sm{padding:10px 20px;font-size:.72rem}
+
+/* Preloader */
+#loader{position:fixed;inset:0;z-index:100;background:var(--maroon);display:grid;place-items:center;text-align:center;color:var(--cream);transition:opacity 1s var(--ease),visibility 1s}
+#loader.hide{opacity:0;visibility:hidden}
+#loader .t{font-family:var(--tamil);font-size:clamp(1.6rem,6vw,2.4rem);animation:pulse 1.6s ease-in-out infinite}
+#loader small{display:block;letter-spacing:.4em;font-size:.7rem;color:var(--gold-soft);margin-top:10px;text-transform:uppercase}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+
+/* Header */
+header{position:fixed;inset:0 0 auto 0;z-index:50;transition:all .5s var(--ease)}
+header.scrolled{background:rgba(250,245,234,.94);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo{font-family:var(--serif);font-size:1.45rem;font-weight:700;color:var(--maroon);letter-spacing:.04em}
+.nav-links{display:flex;gap:34px;align-items:center}
+.nav-links a{font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;position:relative;padding:4px 0}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--gold);transition:width .5s var(--ease)}
+.nav-links a:not(.btn):hover::after{width:100%}
+.menu-btn{display:none;background:none;border:0;font-size:1.6rem;color:var(--maroon);cursor:pointer;line-height:1}
+
+/* Hero */
+.hero{min-height:100vh;display:grid;place-items:center;text-align:center;padding:130px 0 90px;overflow:hidden;
+  background:
+   radial-gradient(1000px 500px at 50% 0%,rgba(176,141,62,.14),transparent 70%),
+   radial-gradient(800px 400px at 50% 100%,rgba(107,29,42,.08),transparent 70%),
+   var(--cream)}
+.hero::before{content:"";position:absolute;inset:22px;border:1px solid var(--gold-soft);pointer-events:none}
+.hero::after{content:"";position:absolute;inset:30px;border:1px solid rgba(176,141,62,.35);pointer-events:none}
+.hero .tamil{font-family:var(--tamil);font-size:clamp(1.2rem,3.4vw,1.7rem);color:var(--gold);margin-bottom:6px}
+.hero h1{font-size:clamp(3rem,10vw,6.4rem);letter-spacing:.01em}
+.hero .sub{font-family:var(--serif);font-style:italic;font-size:clamp(1.15rem,2.6vw,1.6rem);color:var(--muted);min-height:2.4em;position:relative}
+.rot{display:inline-block;transition:opacity .9s var(--ease)}
+.rot.out{opacity:0}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.scroll-hint{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* Staggered hero entrance */
+.h-in{opacity:0;transform:translateY(18px)}
+body.ready .h-in{animation:rise 1.2s var(--ease) forwards}
+body.ready .h-in:nth-child(1){animation-delay:.5s}
+body.ready .h-in:nth-child(2){animation-delay:.8s}
+body.ready .h-in:nth-child(3){animation-delay:1.1s}
+body.ready .h-in:nth-child(4){animation-delay:1.4s}
+body.ready .h-in:nth-child(5){animation-delay:1.7s}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* About */
+.about{background:var(--paper)}
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:center}
+.about p{color:var(--muted);margin-bottom:16px}
+.stats{display:grid;gap:0;border:1px solid var(--gold-soft);background:var(--cream)}
+.stat{padding:30px 20px;text-align:center;border-bottom:1px solid var(--gold-soft)}
+.stat:last-child{border-bottom:0}
+.stat b{display:block;font-family:var(--serif);font-size:2.8rem;color:var(--maroon);font-weight:600;line-height:1}
+.stat span{font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+
+/* Departments */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
+.card{background:var(--paper);border:1px solid var(--line);padding:38px 28px 28px;text-align:center;position:relative;transition:all .6s var(--ease);display:flex;flex-direction:column}
+.card::before{content:"";position:absolute;inset:8px;border:1px solid transparent;transition:border-color .6s var(--ease);pointer-events:none}
+.card:hover{transform:translateY(-8px);box-shadow:0 22px 40px rgba(74,18,32,.1)}
+.card:hover::before{border-color:var(--gold-soft)}
+.num{font-family:var(--serif);font-size:2.6rem;color:var(--gold);font-style:italic;line-height:1}
+.card h3{font-size:1.45rem;margin:12px 0 8px}
+.card p{color:var(--muted);font-size:.95rem;flex:1;margin-bottom:20px}
+.price{font-family:var(--serif);font-size:1.35rem;color:var(--maroon);font-weight:700;margin-bottom:16px}
+.price small{display:block;font-family:var(--sans);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:400}
+
+/* Why */
+.why{background:var(--paper)}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border-top:1px solid var(--gold-soft);border-bottom:1px solid var(--gold-soft)}
+.why-item{padding:40px 28px;text-align:center;border-right:1px solid var(--line)}
+.why-item:last-child{border-right:0}
+.why-item h3{font-size:1.35rem;margin:8px 0 8px}
+.why-item p{color:var(--muted);font-size:.93rem}
+
+/* Reviews */
+.reviews{background:var(--maroon);color:var(--cream)}
+.reviews h2{color:var(--cream)}
+.reviews .lead{color:rgba(250,245,234,.7)}
+.reviews .eyebrow{color:var(--gold-soft)}
+.t-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px}
+.t-card{border:1px solid rgba(217,194,138,.4);padding:36px 28px;text-align:center}
+.stars{color:var(--gold-soft);letter-spacing:.3em;margin-bottom:14px}
+.t-card p{font-family:var(--serif);font-size:1.25rem;font-style:italic;margin-bottom:18px;color:#fff}
+.t-card b{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--gold-soft)}
+.t-card span{display:block;font-size:.8rem;color:rgba(250,245,234,.6)}
+
+/* FAQ */
+.faq-list{max-width:760px;margin-inline:auto}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{width:100%;text-align:left;background:none;border:0;padding:24px 0;font:600 1.35rem var(--serif);color:var(--maroon);cursor:pointer;display:flex;justify-content:space-between;gap:14px;align-items:center}
+.faq-q::after{content:"+";font-size:1.7rem;color:var(--gold);transition:transform .5s var(--ease);line-height:1}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;opacity:0;transition:max-height .6s var(--ease),opacity .6s var(--ease);color:var(--muted)}
+.faq-item.open .faq-a{opacity:1;padding-bottom:22px}
+
+/* Visit */
+.visit{background:var(--paper)}
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--gold-soft)}
+.panel{padding:46px 40px}
+.panel + .panel{border-left:1px solid var(--gold-soft);background:var(--cream)}
+.panel h3{font-size:1.7rem;margin-bottom:22px}
+.info{display:grid;gap:22px}
+.info b{display:block;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.info a:hover{color:var(--maroon);text-decoration:underline}
+.hours{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.95rem}
+.hours div{display:flex;justify-content:space-between;gap:14px;padding:4px 0}
+form{display:grid;gap:16px}
+label{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);font-weight:500}
+input,textarea,select{width:100%;padding:13px 2px;border:0;border-bottom:1px solid var(--gold-soft);background:transparent;font:inherit;color:var(--ink);transition:border-color .4s}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--maroon)}
+textarea{min-height:90px;resize:vertical}
+.note{font-size:.8rem;color:var(--muted)}
+
+/* Footer */
+footer{background:var(--maroon-dark);color:rgba(250,245,234,.75);text-align:center;padding:60px 0 34px}
+footer .logo{color:var(--cream);font-size:1.8rem}
+footer .tamil{font-family:var(--tamil);color:var(--gold-soft);margin:4px 0 6px}
+.socials{display:flex;gap:18px;justify-content:center;margin:18px 0}
+.socials a{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid var(--gold)}
+.copy{margin-top:26px;padding-top:22px;border-top:1px solid rgba(250,245,234,.14);font-size:.8rem}
+
+/* Floating buttons */
+.wa-float{position:fixed;right:18px;bottom:18px;z-index:60;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:26px;box-shadow:0 10px 26px rgba(0,0,0,.25);transition:transform .4s var(--ease)}
+.wa-float:hover{transform:scale(1.1)}
+.sample-tag{position:fixed;left:12px;bottom:12px;z-index:60;background:var(--ink);color:#fff;font:500 11px var(--sans);letter-spacing:.08em;padding:8px 14px;border-radius:999px;opacity:.92}
+
+/* Fade in / out on scroll */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.12s}.reveal.d2{transition-delay:.24s}.reveal.d3{transition-delay:.36s}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal,.h-in,body{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+}
+
+@media (max-width:860px){
+  section{padding:72px 0}
+  .about-grid,.visit-grid{grid-template-columns:1fr}
+  .about-grid{gap:44px}
+  .panel{padding:34px 24px}
+  .panel + .panel{border-left:0;border-top:1px solid var(--gold-soft)}
+  .why-item{border-right:0;border-bottom:1px solid var(--line)}
+  .hero::before{inset:12px}.hero::after{inset:18px}
+  .menu-btn{display:block}
+  .nav-links{position:absolute;top:74px;left:0;right:0;flex-direction:column;gap:0;background:var(--cream);max-height:0;overflow:hidden;opacity:0;transition:max-height .5s var(--ease),opacity .5s var(--ease);box-shadow:0 12px 20px rgba(0,0,0,.06)}
+  .nav-links.open{max-height:460px;opacity:1}
+  .nav-links a{width:100%;padding:16px 6%;border-top:1px solid var(--line)}
+  .nav-links .btn{margin:16px 6%;width:88%}
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader"><div><div class="t">ஸ்ரீ முருகன் அங்காடி</div><small>Sri Murugan Stores</small></div></div>
+
+<header id="header">
+  <div class="container nav">
+    <a href="#home" class="logo" data-text="businessName">Sri Murugan Stores</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#departments">Departments</a>
+      <a href="#why">Why Us</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+      <a href="#visit">Visit</a>
+      <a href="#" class="btn btn-solid btn-sm" data-wa="Hello! I would like to know more about your store.">WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="tamil h-in">ஸ்ரீ முருகன் அங்காடி</div>
+      <h1 class="h-in" data-text="businessName">Sri Murugan Stores</h1>
+      <div class="h-in"><div class="orn"><span>✦</span></div></div>
+      <p class="sub h-in"><span class="rot" id="rot"></span></p>
+      <div class="hero-actions h-in">
+        <a href="#" class="btn btn-solid" data-wa="Hello! I would like to know more about your store.">Message on WhatsApp</a>
+        <a href="#departments" class="btn">Explore</a>
+      </div>
+    </div>
+    <div class="scroll-hint">Scroll</div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div class="reveal">
+        <span class="eyebrow">Our Story</span>
+        <h2 data-text="aboutTitle">About Sri Murugan Stores</h2>
+        <div class="orn" style="margin-left:0;justify-content:flex-start"><span>✦</span></div>
+        <div id="aboutText"></div>
+      </div>
+      <div class="stats reveal d2" id="stats"></div>
+    </div>
+  </section>
+
+  <section id="departments">
+    <div class="container">
+      <div class="head reveal">
+        <span class="eyebrow">What We Offer</span>
+        <h2>Our Departments</h2>
+        <div class="orn"><span>✦</span></div>
+        <p class="lead" data-text="servicesIntro"></p>
+      </div>
+      <div class="cards" id="serviceCards"></div>
+    </div>
+  </section>
+
+  <section class="why" id="why">
+    <div class="container">
+      <div class="head reveal">
+        <span class="eyebrow">The Difference</span>
+        <h2>Why shop with us</h2>
+        <div class="orn"><span>✦</span></div>
+      </div>
+      <div class="why-grid reveal" id="whyGrid"></div>
+    </div>
+  </section>
+
+  <section class="reviews" id="reviews">
+    <div class="container">
+      <div class="head reveal">
+        <span class="eyebrow">Kind Words</span>
+        <h2>What customers say</h2>
+        <div class="orn"><span>✦</span></div>
+        <p class="lead">Summarised from public Google feedback. Individual reviews can be added with each customer's permission.</p>
+      </div>
+      <div class="t-grid" id="tGrid"></div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <div class="head reveal">
+        <span class="eyebrow">Good to Know</span>
+        <h2>Questions &amp; answers</h2>
+        <div class="orn"><span>✦</span></div>
+      </div>
+      <div class="faq-list reveal" id="faqList"></div>
+    </div>
+  </section>
+
+  <section class="visit" id="visit">
+    <div class="container">
+      <div class="head reveal">
+        <span class="eyebrow">Find Us</span>
+        <h2>Visit the store</h2>
+        <div class="orn"><span>✦</span></div>
+      </div>
+      <div class="visit-grid reveal">
+        <div class="panel">
+          <h3>Store details</h3>
+          <div class="info">
+            <div><b>Address</b><span data-text="address"></span><br><a id="mapLink" href="#" hidden style="color:var(--maroon);font-weight:500">Get directions →</a></div>
+            <div><b>Telephone</b><a id="phoneLink" href="#" data-text="phoneDisplay"></a></div>
+            <div><b>Email</b><a id="emailLink" href="#" data-text="email"></a></div>
+          </div>
+          <div class="hours" id="hours"></div>
+        </div>
+        <div class="panel">
+          <h3>Send an enquiry</h3>
+          <form id="waForm">
+            <div><label for="fName">Your name</label><input id="fName" required></div>
+            <div><label for="fService">Department</label><select id="fService"></select></div>
+            <div><label for="fMsg">Message</label><textarea id="fMsg"></textarea></div>
+            <button class="btn btn-solid" type="submit">Send on WhatsApp</button>
+            <p class="note">This opens WhatsApp with your message ready to send.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="logo" data-text="businessName">Sri Murugan Stores</div>
+    <div class="tamil">ஸ்ரீ முருகன் அங்காடி</div>
+    <p data-text="tagline"></p>
+    <div class="socials" id="socials"></div>
+    <p class="copy">© <span id="year"></span> <span data-text="businessName">Sri Murugan Stores</span></p>
+  </div>
+</footer>
+
+<div class="sample-tag">Sample design – not the official website</div>
+<a href="#" class="wa-float" aria-label="Chat on WhatsApp" data-wa="Hello! I would like to know more about your store.">💬</a>
+
+<script>
+/* ==========================================================
+   ✏️ EDIT ONLY THIS BLOCK. Keep the quotes "" and commas ,
+   ========================================================== */
+const CONFIG = {
+  businessName: "Sri Murugan Stores",
+  tagline: "Your neighbourhood general store in Tiruvottiyur",
+
+  // Lines that fade in and out under the shop name (add or remove freely)
+  heroLines: [
+    "Groceries and household items, all under one roof",
+    "Fair prices. Friendly service. Easy exchange.",
+    "Serving Tiruvottiyur on High Road, Periyar Nagar"
+  ],
+
+  // OWNER TO CONFIRM: WhatsApp number (country code + digits, no + or spaces)
+  whatsappNumber: "91XXXXXXXXXX",
+  phoneDisplay: "044 2573 4260",
+  email: "owner-email@example.com",
+  address: "Thiruvottiyur High Rd, Periyar Nagar, Tiruvottiyur, Chennai, Tamil Nadu 600019",
+  mapLink: "https://www.google.com/maps/search/?api=1&query=Sri+Murugan+Stores+Tiruvottiyur",
+
+  hours: [
+    ["Every day (owner to confirm)", "Opening time TBC – Closes 9:00 PM"]
+  ],
+
+  aboutTitle: "About Sri Murugan Stores",
+  aboutText: [
+    "Sri Murugan Stores is a general store on Thiruvottiyur High Road, Periyar Nagar, serving families in the neighbourhood with everyday groceries and household goods.",
+    "[Owner to add: the shop's story, how long it has been running, and what makes it special.]"
+  ],
+  stats: [
+    { value: "4.6★", label: "Google rating" },
+    { value: "39",   label: "Google reviews" },
+    { value: "9 PM", label: "Closing time" }
+  ],
+
+  servicesIntro: "Sample departments with placeholder prices. The owner will confirm the real list and prices.",
+  services: [
+    { name: "Groceries & Provisions", desc: "Daily groceries and provisions for your home.", price: "₹ – TBC", unit: "" },
+    { name: "Household Items", desc: "Kitchen and household goods for everyday use.", price: "₹ – TBC", unit: "" },
+    { name: "Daily Essentials", desc: "Personal care and cleaning products.", price: "₹ – TBC", unit: "" },
+    { name: "Appliance Repair", desc: "Repair of kitchen appliances, if the shop offers it (owner to confirm).", price: "Ask for quote", unit: "" }
+  ],
+
+  why: [
+    { title: "Fair prices",       text: "Customers say prices are reasonable for the quality." },
+    { title: "Easy exchange",     text: "Wrongly ordered products can be exchanged easily." },
+    { title: "Friendly staff",    text: "Helpful, polite service on every visit." },
+    { title: "Well stocked",      text: "Most household needs available in one place." }
+  ],
+
+  // Real customer quotes need the customer's permission.
+  testimonials: [
+    { name: "Google review summary", role: "4.6 rating from 39 reviews", text: "Customers often mention low prices and good quality." },
+    { name: "Google review summary", role: "Common feedback", text: "Friendly staff and easy product exchange." },
+    { name: "Your review here", role: "Customer name, area", text: "Add a review from a happy customer, with their permission." }
+  ],
+
+  faqs: [
+    { q: "What are your opening hours?", a: "We close at 9:00 PM. [Owner to add the opening time.]" },
+    { q: "Where are you located?", a: "Thiruvottiyur High Rd, Periyar Nagar, Tiruvottiyur, Chennai 600019." },
+    { q: "Can I exchange a product?", a: "[Owner to confirm the exchange policy.]" },
+    { q: "How can I ask about a product?", a: "Tap any WhatsApp button on this page and send us a message, or call 044 2573 4260." }
+  ],
+
+  social: { Instagram: "", Facebook: "", YouTube: "" }
+};
+/* ============== END OF EDIT AREA ============== */
+
+
+(function () {
+  const C = CONFIG;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x !== undefined) e.textContent = x; return e; };
+  const wa = m => "https://wa.me/" + String(C.whatsappNumber).replace(/\D/g, "") + "?text=" + encodeURIComponent(m);
+  const roman = n => ["I","II","III","IV","V","VI","VII","VIII"][n] || String(n + 1);
+
+  document.title = C.businessName + " – Sample Website Design";
+  $$("[data-text]").forEach(n => { const v = C[n.dataset.text]; if (typeof v === "string") n.textContent = v; });
+  $("#year").textContent = new Date().getFullYear();
+  $$("[data-wa]").forEach(a => { a.href = wa(a.dataset.wa); a.target = "_blank"; a.rel = "noopener"; });
+
+  C.aboutText.forEach(t => $("#aboutText").appendChild(el("p", "", t)));
+  C.stats.forEach(s => {
+    const d = el("div", "stat");
+    d.append(el("b", "", s.value), el("span", "", s.label));
+    $("#stats").appendChild(d);
+  });
+
+  C.services.forEach((s, i) => {
+    const c = el("article", "card reveal d" + (i % 3 + 1));
+    c.append(el("div", "num", roman(i)), el("h3", "", s.name), el("p", "", s.desc));
+    const p = el("div", "price", s.price);
+    if (s.unit) p.appendChild(el("small", "", s.unit));
+    const b = el("a", "btn btn-gold btn-sm", "Enquire");
+    b.href = wa("Hello! I would like to enquire about: " + s.name);
+    b.target = "_blank"; b.rel = "noopener";
+    c.append(p, b);
+    $("#serviceCards").appendChild(c);
+    const o = el("option", "", s.name); o.value = s.name;
+    $("#fService").appendChild(o);
+  });
+
+  C.why.forEach((w, i) => {
+    const d = el("div", "why-item");
+    d.append(el("div", "num", roman(i)), el("h3", "", w.title), el("p", "", w.text));
+    $("#whyGrid").appendChild(d);
+  });
+
+  C.testimonials.forEach((t, i) => {
+    const d = el("div", "t-card reveal d" + (i % 3 + 1));
+    d.append(el("div", "stars", "★★★★★"), el("p", "", "“" + t.text + "”"), el("b", "", t.name), el("span", "", t.role));
+    $("#tGrid").appendChild(d);
+  });
+
+  C.faqs.forEach(f => {
+    const it = el("div", "faq-item");
+    const q = el("button", "faq-q", f.q); q.type = "button"; q.setAttribute("aria-expanded", "false");
+    const a = el("div", "faq-a"); a.appendChild(el("p", "", f.a));
+    q.addEventListener("click", () => {
+      const open = it.classList.toggle("open");
+      q.setAttribute("aria-expanded", open);
+      a.style.maxHeight = open ? a.scrollHeight + "px" : "0";
+    });
+    it.append(q, a);
+    $("#faqList").appendChild(it);
+  });
+
+  $("#phoneLink").href = "tel:" + String(C.phoneDisplay).replace(/[^\d+]/g, "");
+  $("#emailLink").href = "mailto:" + C.email;
+  if (C.mapLink) { const m = $("#mapLink"); m.href = C.mapLink; m.hidden = false; m.target = "_blank"; m.rel = "noopener"; }
+  C.hours.forEach(h => { const r = el("div"); r.append(el("span", "", h[0]), el("span", "", h[1])); $("#hours").appendChild(r); });
+
+  $("#waForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const msg = $("#fMsg").value.trim();
+    const text = "Hello! My name is " + $("#fName").value.trim() + ".\nDepartment: " + $("#fService").value + (msg ? "\nMessage: " + msg : "");
+    window.open(wa(text), "_blank", "noopener");
+  });
+
+  Object.entries(C.social).forEach(([n, u]) => {
+    if (!u) return;
+    const a = el("a", "", n); a.href = u; a.target = "_blank"; a.rel = "noopener";
+    $("#socials").appendChild(a);
+  });
+
+  /* Hero lines: cross-fade in and out */
+  const rot = $("#rot");
+  let ri = 0;
+  rot.textContent = C.heroLines[0];
+  if (C.heroLines.length > 1) {
+    setInterval(() => {
+      rot.classList.add("out");
+      setTimeout(() => { ri = (ri + 1) % C.heroLines.length; rot.textContent = C.heroLines[ri]; rot.classList.remove("out"); }, 900);
+    }, 4200);
+  }
+
+  /* Header + menu */
+  const header = $("#header");
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 40);
+  addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  const mb = $("#menuBtn"), nav = $("#navLinks");
+  mb.addEventListener("click", () => {
+    const o = nav.classList.toggle("open");
+    mb.setAttribute("aria-expanded", o); mb.textContent = o ? "✕" : "☰";
+  });
+  $$("#navLinks a").forEach(a => a.addEventListener("click", () => { nav.classList.remove("open"); mb.textContent = "☰"; }));
+
+  /* Fade in when entering view, fade out when leaving */
+  const items = $$(".reveal");
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => es.forEach(en => en.target.classList.toggle("in", en.isIntersecting)), { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
+    items.forEach(i => io.observe(i));
+  } else items.forEach(i => i.classList.add("in"));
+
+  /* Loader */
+  const done = () => {
+    document.body.classList.add("ready");
+    setTimeout(() => $("#loader").classList.add("hide"), 900);
+  };
+  if (document.readyState === "complete") done(); else addEventListener("load", done);
+  setTimeout(done, 3000);
+})();
+</script>
+</body>
+</html>
